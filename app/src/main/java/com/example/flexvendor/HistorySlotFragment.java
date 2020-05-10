@@ -110,6 +110,7 @@ public class HistorySlotFragment extends Fragment {
                                         final String hours=ds.child("showWorkHours").getValue(String.class);
                                         final String transactionDateTime=ds.child("transactionDateTime").getValue(String.class);
                                         final String transactionMoney=ds.child("transactionMoney").getValue(String.class);
+                                        final String slotId = ds.child("slotId").getValue(String.class);
 
                                         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -146,12 +147,14 @@ public class HistorySlotFragment extends Fragment {
                                                                     item.setTransactionMoney("null");
                                                                     item.setPaid(false);
                                                                     item.setUpiId(upiId);
+                                                                    item.setSlotId(slotId);
                                                                 }
                                                                 else{
                                                                     item.setTransactionDateTime(transactionDateTime);
                                                                     item.setTransactionMoney(transactionMoney);
                                                                     item.setPaid(true);
                                                                     item.setUpiId("null");
+                                                                    item.setSlotId("null");
                                                                 }
                                                                 users.add(item);
                                                                 adapter=new CustomListViewAdapter(refActivity, R.layout.list_slot, users, getImageUrl);
@@ -213,14 +216,15 @@ public class HistorySlotFragment extends Fragment {
                 TextView tvUserName = view.findViewById(R.id.tvUserName);
                 TextView tvUsrPhone = view.findViewById(R.id.tvUserPhone);
                 TextView tvTimings = view.findViewById(R.id.tvTimings);
-                String getMailFromList = tvEmail.getText().toString();
+                TextView tvSlot = view.findViewById(R.id.invisibleSlotId);
                 if (!tvUpiId.getText().equals("")) {
                     Intent intent = new Intent(getActivity(), PaymentActivity.class);
-                    intent.putExtra("email", getMailFromList);
+                    intent.putExtra("email", tvEmail.getText().toString());
                     intent.putExtra("upiId", tvUpiId.getText().toString());
                     intent.putExtra("name", tvUserName.getText().toString());
                     intent.putExtra("phone", tvUsrPhone.getText().toString());
                     intent.putExtra("timings", tvTimings.getText().toString());
+                    intent.putExtra("slotId", tvSlot.getText().toString());
                     startActivity(intent);
                 }
 

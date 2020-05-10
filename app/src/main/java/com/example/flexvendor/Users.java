@@ -12,6 +12,7 @@ public class Users {
     private String transactionMoney;
     private boolean isPaid;
     private String upiId;
+    private String slotId;
 
     Users(String email,String name, String phone, String timings) {
 
@@ -82,6 +83,14 @@ public class Users {
 
     public void setUpiId(String upiId) {
         this.upiId = upiId;
+    }
+
+    public String getSlotId() {
+        return slotId;
+    }
+
+    public void setSlotId(String slotId) {
+        this.slotId = slotId;
     }
 
 

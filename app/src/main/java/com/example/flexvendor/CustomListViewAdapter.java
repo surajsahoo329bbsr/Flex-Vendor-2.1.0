@@ -51,6 +51,7 @@ public class CustomListViewAdapter extends ArrayAdapter<Users> {
             holder.tvTransactionMoney=convertView.findViewById(R.id.tvTransactionMoney);
             holder.txtEmail=convertView.findViewById(R.id.invisibleEmail);
             holder.tvUpiId = convertView.findViewById(R.id.invisibleUpiId);
+            holder.tvSlotId = convertView.findViewById(R.id.invisibleSlotId);
             holder.imageView=convertView.findViewById(R.id.ivImage);
             convertView.setTag(holder);
         } else
@@ -74,6 +75,7 @@ public class CustomListViewAdapter extends ArrayAdapter<Users> {
             holder.tvTransactionDateTime.setText("Please complete your payment");
             holder.tvTransactionMoney.setText("Tap here to make payment");
             holder.tvUpiId.setText(users.getUpiId());
+            holder.tvSlotId.setText(users.getSlotId());
         }
         else if(users.isPaid()) {
             holder.tvPaymentStatus.setText("Payment Done");
@@ -81,6 +83,7 @@ public class CustomListViewAdapter extends ArrayAdapter<Users> {
             holder.tvTransactionDateTime.setText(users.getTransactionDateTime());
             holder.tvTransactionMoney.setText("\u20B9 "+users.getTransactionMoney());
             holder.tvUpiId.setText("");
+            holder.tvSlotId.setText("");
         }
 
         return convertView;
@@ -98,6 +101,7 @@ public class CustomListViewAdapter extends ArrayAdapter<Users> {
         ImageView ivPaymentStatus;
         TextView tvTransactionDateTime;
         TextView tvTransactionMoney;
+        TextView tvSlotId;
     }
 
 

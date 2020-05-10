@@ -32,10 +32,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 public class PaymentActivity extends AppCompatActivity {
@@ -45,7 +50,7 @@ public class PaymentActivity extends AppCompatActivity {
     TextView tvPaymentName, tvPaymentUpiId, tvPaymentPhone, tvPaymentTimings;
     ImageView ivPaymentImage;
     Button btnPay;
-    String getImageUrl;
+    String getImageUrl, getSlotId;
 
     public static boolean isConnectionAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -85,6 +90,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
+        getSlotId = intent.getStringExtra("slotId");
         tvPaymentName.setText(intent.getStringExtra("name"));
         tvPaymentPhone.setText(intent.getStringExtra("phone"));
         tvPaymentTimings.setText(intent.getStringExtra("timings"));
@@ -193,8 +199,17 @@ public class PaymentActivity extends AppCompatActivity {
                 //Code to handle successful transaction here.
                 //Toast.makeText(getApplicationContext(), "Transaction successful.", Toast.LENGTH_SHORT).show();
                 Log.d("UPI", "responseStr: " + approvalRefNo);
-                startActivity(new Intent(getApplicationContext(), PaymentSuccessActivity.class));
+                Intent intent = new Intent(getApplicationContext(), PaymentSuccessActivity.class);
+                DatabaseReference historyRef = FirebaseDatabase.getInstance().getReference("History");
+                historyRef.child(getSlotId).child("transactionMoney").setValue(etPaymentMoney.getText().toString().trim());
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Date date = new Date();
+                historyRef.child(getSlotId).child("transactionDateTime").setValue(dateFormat.format(date));
+                intent.putExtra("dateTime", dateFormat.format(date));
+                intent.putExtra("money", etPaymentMoney.getText().toString().trim());
+                startActivity(intent);
                 finish();
+
             } else if ("Payment cancelled by user.".equals(paymentCancel)) {
                 Toast.makeText(getApplicationContext(), "Payment cancelled by user.", Toast.LENGTH_SHORT).show();
             } else {

@@ -13,6 +13,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,14 @@ public class PaymentSuccessActivity extends AppCompatActivity {
         Spannable text = new SpannableString(getSupportActionBar().getTitle());
         text.setSpan(new ForegroundColorSpan(Color.BLACK), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         getSupportActionBar().setTitle(text);
+
+        TextView tvShowPaymentDateTime = findViewById(R.id.showPaymentDateTime);
+        TextView tvShowPaymentMoney = findViewById(R.id.showPaymentAmount);
+
+        Intent intent = getIntent();
+
+        tvShowPaymentMoney.setText("\u20B9 " + intent.getStringExtra("money"));
+        tvShowPaymentDateTime.setText(intent.getStringExtra("dateTime"));
     }
 
     @Override
