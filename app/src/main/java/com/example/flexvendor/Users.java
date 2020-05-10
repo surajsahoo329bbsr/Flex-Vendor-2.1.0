@@ -11,6 +11,7 @@ public class Users {
     private String transactionDateTime;
     private String transactionMoney;
     private boolean isPaid;
+    private String upiId;
 
     Users(String email,String name, String phone, String timings) {
 
@@ -73,6 +74,14 @@ public class Users {
 
     public void setPaid(boolean paid) {
         isPaid = paid;
+    }
+
+    public String getUpiId() {
+        return upiId;
+    }
+
+    public void setUpiId(String upiId) {
+        this.upiId = upiId;
     }
 
 

@@ -45,6 +45,12 @@
                 android:text="@string/email"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/invisibleUpiId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
 
             <TextView
                 android:id="@+id/tvUserName"

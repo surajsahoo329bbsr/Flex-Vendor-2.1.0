@@ -129,5 +129,15 @@
     <string name="suraj_kumar_sahoo">Suraj Kumar Sahoo</string>
     <string name="_91_7978756312">+91-7978756312</string>
     <string name="upcoming">Upcoming</string>
+    <string name="payment">Payment</string>
+    <string name="suraj_okici">suraj@okici</string>
+    <string name="type_your_note_here">Type your note here</string>
+    <string name="pay">Pay</string>
+    <string name="u20b9_0_00">0.00</string>
+    <string name="u20b9">₹</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="payment_successful">Payment Successful</string>
+    <string name="u20b9_40_00">₹ 40.00</string>
+    <string name="_10_may_2020_12_45_23_pm">10-May-2020, 12:45:23 PM</string>
 </resources>
 

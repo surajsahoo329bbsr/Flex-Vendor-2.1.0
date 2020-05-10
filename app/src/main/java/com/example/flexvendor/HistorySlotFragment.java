@@ -4,13 +4,16 @@ package com.example.flexvendor;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -38,7 +41,7 @@ import java.util.List;
 
 public class HistorySlotFragment extends Fragment {
 
-    private String checkMail, vEmail, name, phone;
+    private String checkMail, vEmail, name, phone, upiId;
     private ListView historyListViewSlot;
     private List<String> getImageUrl;
     private CustomListViewAdapter adapter;
@@ -131,6 +134,8 @@ public class HistorySlotFragment extends Fragment {
                                                                 getImageUrl.add(uri.toString());
                                                                 name=ds.child("userName").getValue(String.class);
                                                                 phone=ds.child("userPhone").getValue(String.class);
+                                                                upiId = ds.child("userUpiId").getValue(String.class);
+
                                                                 String modTime=String.valueOf(modDateArr) + ", " + stTime + " | " + hours;
                                                                 Users item=new Users(inLoopEmail, name, phone, modTime);
                                                                 assert transactionDateTime != null;
@@ -140,11 +145,13 @@ public class HistorySlotFragment extends Fragment {
                                                                     item.setTransactionDateTime("null");
                                                                     item.setTransactionMoney("null");
                                                                     item.setPaid(false);
+                                                                    item.setUpiId(upiId);
                                                                 }
                                                                 else{
                                                                     item.setTransactionDateTime(transactionDateTime);
                                                                     item.setTransactionMoney(transactionMoney);
                                                                     item.setPaid(true);
+                                                                    item.setUpiId("null");
                                                                 }
                                                                 users.add(item);
                                                                 adapter=new CustomListViewAdapter(refActivity, R.layout.list_slot, users, getImageUrl);
@@ -193,6 +200,29 @@ public class HistorySlotFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        historyListViewSlot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                TextView tvEmail = view.findViewById(R.id.invisibleEmail);
+                TextView tvUpiId = view.findViewById(R.id.invisibleUpiId);
+                TextView tvUserName = view.findViewById(R.id.tvUserName);
+                TextView tvUsrPhone = view.findViewById(R.id.tvUserPhone);
+                TextView tvTimings = view.findViewById(R.id.tvTimings);
+                String getMailFromList = tvEmail.getText().toString();
+                if (!tvUpiId.getText().equals("")) {
+                    Intent intent = new Intent(getActivity(), PaymentActivity.class);
+                    intent.putExtra("email", getMailFromList);
+                    intent.putExtra("upiId", tvUpiId.getText().toString());
+                    intent.putExtra("name", tvUserName.getText().toString());
+                    intent.putExtra("phone", tvUsrPhone.getText().toString());
+                    intent.putExtra("timings", tvTimings.getText().toString());
+                    startActivity(intent);
+                }
 
             }
         });

@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LicenseDetailsActivity"></activity>
+        <activity android:name=".PaymentFailedActivity"></activity>
+        <activity android:name=".PaymentSuccessActivity" />
+        <activity android:name=".PaymentActivity" />
+        <activity android:name=".LicenseDetailsActivity" />
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
