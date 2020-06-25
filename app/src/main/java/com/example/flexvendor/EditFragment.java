@@ -34,19 +34,19 @@ import java.util.Objects;
 public class EditFragment extends Fragment {
 
 
-    static int updateFlag=0;
+    static int updateFlag = 0;
     private String id;
     private View parentLayout;
     private EditText etName, etPhone;
-    private DatabaseReference usrRef, updateRef;
-    private String checkEmail, uemail, updateName, updatePhone;
-    private boolean onceChecked=false;
+    private DatabaseReference updateRef;
+    private String checkEmail, uEmail, updateName, updatePhone;
+    private boolean onceChecked = false;
 
     public EditFragment() {
         // Required empty public constructor
     }
 
-    @RequiresApi(api=Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,8 +62,8 @@ public class EditFragment extends Fragment {
         assert user != null;
         checkEmail=user.getEmail();
 
-        final DatabaseReference dbRef=FirebaseDatabase.getInstance().getReference();
-        usrRef=dbRef.child("Vendor");
+        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference usrRef = dbRef.child("Vendor");
         updateRef=dbRef.child("Vendor");
 
         if (!onceChecked) {
@@ -77,13 +77,13 @@ public class EditFragment extends Fragment {
 
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                        uemail=ds.child("vendorMail").getValue(String.class);
-                        assert uemail != null;
-                        if (uemail.equals(checkEmail)) {
+                        uEmail = ds.child("vendorMail").getValue(String.class);
+                        assert uEmail != null;
+                        if (uEmail.equals(checkEmail)) {
 
                             pd.dismiss();
-                            String getName=ds.child("vendorName").getValue(String.class);
-                            String getPhone=ds.child("vendorPhone").getValue(String.class);
+                            String getName = ds.child("vendorName").getValue(String.class);
+                            String getPhone = ds.child("vendorPhone").getValue(String.class);
                             etName.setText(getName);
                             etPhone.setText(getPhone);
                             break;
@@ -154,18 +154,18 @@ public class EditFragment extends Fragment {
 
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                                uemail=ds.child("vendorMail").getValue(String.class);
+                                uEmail = ds.child("vendorMail").getValue(String.class);
 
-                                assert uemail != null;
-                                if (uemail.equals(checkEmail)) {
+                                assert uEmail != null;
+                                if (uEmail.equals(checkEmail)) {
 
                                     pd.dismiss();
-                                    id=ds.child("userId").getValue(String.class);
+                                    id = ds.child("vendorId").getValue(String.class);
                                     assert id != null;
-                                    usrRef.child(id).child("vendorName").setValue(updateName);
-                                    usrRef.child(id).child("vendorPhone").setValue(updatePhone);
-                                    updateFlag=1;
-                                    Intent intent=new Intent(getActivity(), MainActivity.class);
+                                    updateRef.child(id).child("vendorName").setValue(updateName);
+                                    updateRef.child(id).child("vendorPhone").setValue(updatePhone);
+                                    updateFlag = 1;
+                                    Intent intent = new Intent(getActivity(), MainActivity.class);
                                     intent.putExtra("openProfile", true);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                     startActivity(intent);
